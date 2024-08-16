@@ -1,7 +1,6 @@
 from fastapi import FastAPI, HTTPException, Depends
 from sqlalchemy.orm import Session
-from typing import List
-from typing import Optional
+from typing import List, Optional
 
 from models import Book, Base
 from schemas import BookBase, BookCreate, BookInDB, BookUpdate
@@ -12,6 +11,11 @@ Base.metadata.create_all(bind=engine)
 
 # Initialize FastAPI app
 app = FastAPI()
+
+# Root endpoint
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the Book API. Use /books/ to manage your books."}
 
 # Endpoint to create a new book
 @app.post("/books/", response_model=BookInDB)
